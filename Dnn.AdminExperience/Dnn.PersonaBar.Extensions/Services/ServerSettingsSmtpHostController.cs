@@ -17,6 +17,7 @@ namespace Dnn.PersonaBar.Servers.Services
     using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Framework.Providers;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Mail;
@@ -59,7 +60,8 @@ namespace Dnn.PersonaBar.Servers.Services
                         smtpUserName = PortalController.GetPortalSetting("SMTPUsername", portalId, string.Empty),
                         smtpPassword = PortalController.GetEncryptedString("SMTPPassword", portalId, Config.GetDecryptionkey())
                     },
-                    portalName = PortalSettings.Current.PortalName
+                    portalName = PortalSettings.Current.PortalName,
+                    mailProvider = ProviderConfiguration.GetProviderConfiguration("mail").DefaultProvider
                 };
                 return this.Request.CreateResponse(HttpStatusCode.OK, smtpSettings);
             }
